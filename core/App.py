@@ -1,17 +1,24 @@
-from core.Reader import Reader
-from core.Writer import Writer
+from constants.constants import read_mode, write_mode
 
 
 class App:
-    def __init__(self, mode, file_path):
-        self.mode = mode
-        self.file_path = file_path
-        self.reader = Reader(file_path)
-        self.writer = Writer(file_path)
+    def __init__(self, file_path_handler):
+        self.mode = self.get_mode()
+        self.file_path = file_path_handler.get_file_path()
 
-    def start_selected_mode(self):
-        if self.mode == 'read':
-            self.reader.handler_read_file()
+    def get_mode(self):
+        mode = input('Выберите номер метода: \n'
+                     '1: read \n'
+                     '2: write \n')
 
-        elif self.mode == 'write':
-            self.writer.handler_write_to_file()
+        if mode == '1':
+            mode = read_mode
+
+        elif mode == '2':
+            mode = write_mode
+
+        else:
+            print('Неопознаный метод')
+            return self.get_mode()
+
+        return mode
