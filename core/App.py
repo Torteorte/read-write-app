@@ -9,7 +9,9 @@ class App:
         self.reader = Reader(file_path)
         self.writer = Writer(file_path)
 
-    # def check_mode(self):
-    #     if self.mode == 'read':
-    #
-    #     elif self.mode == 'write':
+    def start_selected_mode(self):
+        if self.mode == 'read':
+            self.reader.handler_read_file()
+
+        elif self.mode == 'write':
+            self.writer.handler_write_to_file()
