@@ -1,30 +1,29 @@
 from core.App import App
 from core.FileHandler import FileHandler
-from core.FilePathHandler import FilePathHandler
+from core.Menu import Menu
 
 
 def init_app():
-    file_path_handler = FilePathHandler()
-
-    reader_app = App(file_path_handler)
-
-    return reader_app
+    return App()
 
 
-def init_file_handler(app):
-    file_path = app.file_path
+def init_file_handler():
+    return FileHandler()
 
-    file_handler = FileHandler(file_path)
 
-    return file_handler
+def init_menu(mode, get_new_mode, file_handler, get_new_file_path_handler):
+    return Menu(mode, get_new_mode, file_handler, get_new_file_path_handler, start_app)
 
 
 def start_app():
     reader_app = init_app()
-    file_handler = init_file_handler(reader_app)
+    file_handler = init_file_handler()
 
-    mode = reader_app.mode
-    file_handler.do_action(mode)
+    file_handler.start_action_with_file(reader_app.file_path, reader_app.mode)
+
+    menu = init_menu(reader_app.mode, reader_app.get_mode, file_handler, reader_app.file_path_handler)
+    menu.handler_call_menu()
 
 
-start_app()
+if __name__ == "__main__":
+    start_app()

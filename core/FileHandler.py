@@ -4,11 +4,13 @@ from constants.constants import read_mode, write_mode, csv_extension, txt_extens
 
 
 class FileHandler:
-    def __init__(self, file_path):
-        self.extension = self.get_file_extension(file_path)
+    file_handler = None
 
-    @staticmethod
-    def get_file_extension(file_path):
+    def start_action_with_file(self, file_path, mode):
+        self.get_file_extension(file_path)
+        self.do_action(mode)
+
+    def get_file_extension(self, file_path):
         file_extension = os.path.splitext(file_path)[1]
 
         extensions = {
@@ -18,11 +20,11 @@ class FileHandler:
         }
 
         if file_extension in extensions.keys():
-            return extensions[file_extension]
+            self.file_handler = extensions[file_extension]
 
     def do_action(self, mode):
         if mode == read_mode:
-            self.extension.read_file()
+            self.file_handler.read_file()
 
         elif mode == write_mode:
-            self.extension.write_to_file()
+            self.file_handler.write_to_file()

@@ -1,11 +1,12 @@
-from abc import ABC
+import csv
+from abc import ABC, abstractmethod
 from constants.constants import number_of_string_for_read, default_text
+from utils.utils import default_write_to_file
 
 
 class FileHandlerABC(ABC):
     def __init__(self, file_path):
         self.file_path = file_path
-        self.default_text = default_text
 
     def read_file(self):
         file = open(self.file_path, 'r')
@@ -18,40 +19,39 @@ class FileHandlerABC(ABC):
             if counter == number_of_string_for_read:
                 break
 
+        if counter == 0:
+            print('Пустой файл')
+
+    @abstractmethod
     def write_to_file(self):
-        file = open(self.file_path, 'w')
-
-        for line in self.default_text:
-            file.write(line)
-
-        file.close()
-        print('Запись в файл прошла успешно.')
+        pass
 
 
 class CSVFileHandler(FileHandlerABC):
-    def __init__(self, file_path):
-        super().__init__(file_path)
-        self.change_text_for_write()
+    def write_to_file(self):
+        with open(self.file_path, 'w', newline='') as File:
+            content_of_file = csv.writer(File)
+            content_of_file.writerow(default_text.split('\n'))
 
-    def change_text_for_write(self):
-        text_for_csv_format = self.default_text.split('\n')
-        self.change_text_format_for_csv(text_for_csv_format)
+            for row in self.delete_first_row_in_text():
+                content_of_file.writerow([row])
 
-        text_without_first_row = text_for_csv_format.copy()
-        del text_without_first_row[0]
-
-        self.default_text = ','.join(text_for_csv_format) + '\n' + '\n'.join(text_without_first_row)
+        File.close()
+        print('Запись в файл прошла успешно.')
 
     @staticmethod
-    def change_text_format_for_csv(text):
-        for index in range(len(text)):
-            if ',' in text[index]:
-                text[index] = '"' + text[index] + '"'
+    def delete_first_row_in_text():
+        text_without_first_row = default_text.split('\n').copy()
+        del text_without_first_row[0]
+
+        return text_without_first_row
 
 
 class TXTFileHandler(FileHandlerABC):
-    pass
+    def write_to_file(self):
+        default_write_to_file(self.file_path)
 
 
 class DOCFileHandler(FileHandlerABC):
-    pass
+    def write_to_file(self):
+        default_write_to_file(self.file_path)
