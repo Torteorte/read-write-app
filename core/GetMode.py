@@ -1,11 +1,11 @@
-from constants.constants import read_mode, write_mode
+from constants.constants import read_mode, write_mode, mode_one, mode_two
 
 
 class ModeHandler:
     def get_mode(self):
         mode = input(
-            '1: read \n'
-            '2: write \n'
+            f'{mode_one}: {read_mode} \n'
+            f'{mode_two}: {write_mode} \n'
             'Выберите номер метода: \n'
         )
 
@@ -13,12 +13,15 @@ class ModeHandler:
 
     def check_mode(self, mode):
         modes = {
-            '1': read_mode,
-            '2': write_mode
+            mode_one: read_mode,
+            mode_two: write_mode
         }
 
         if mode in modes.keys():
             return modes[mode]
+
+        elif mode in modes.values():
+            return mode
 
         else:
             print('Неопознаный метод')
