@@ -1,7 +1,7 @@
 import csv
 from abc import ABC, abstractmethod
-from constants.constants import number_of_string_for_read, default_text
 from utils.utils import default_write_to_file
+from constants.constants import number_of_string_for_read, default_text
 
 
 class FileHandlerABC(ABC):
