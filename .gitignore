@@ -6,7 +6,9 @@
 .pnp.js
 
 # testing
-/coverage
+/.coveragerc
+.coverage
+.coveragerc
 
 # production
 /build

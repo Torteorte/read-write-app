@@ -1,5 +1,5 @@
 from core.Menu import Menu
-from core.GetMode import ModeHandler
+from core.ModeHandler import ModeHandler
 from core.FilePathHandler import FilePathHandler
 from core.FileActionHandler import FileActionHandler
 from constants.constants import default_menu_text

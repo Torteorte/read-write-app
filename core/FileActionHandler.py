@@ -18,6 +18,7 @@ class FileActionHandler:
 
             if file_extension in extensions.keys():
                 self.file_handler_by_extension = extensions[file_extension]
+        return self.file_handler_by_extension
 
     def do_action(self, mode):
         if mode == read_mode:
