@@ -1,4 +1,4 @@
-from core.App import App
+from core.app import App
 
 
 def init_app():

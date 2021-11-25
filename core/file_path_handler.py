@@ -1,5 +1,5 @@
 import os
-from core.Menu import Menu
+from core.menu import Menu
 from constants.constants import csv_extension, txt_extension, doc_extension, file_handler_menu_text
 
 

@@ -1,7 +1,7 @@
 import csv
 from abc import ABC, abstractmethod
 from utils.utils import default_write_to_file
-from constants.constants import number_of_string_for_read, default_text
+from constants.constants import number_of_string_for_read
 
 
 class FileHandlerABC(ABC):
@@ -23,35 +23,35 @@ class FileHandlerABC(ABC):
             print('Пустой файл')
 
     @abstractmethod
-    def write_to_file(self):
+    def write_to_file(self, text):
         pass
 
 
 class CSVFileHandler(FileHandlerABC):
-    def write_to_file(self):
+    def write_to_file(self, default_csv_text):
         with open(self.file_path, 'w', newline='') as File:
             content_of_file = csv.writer(File)
-            content_of_file.writerow(default_text.split('\n'))
+            content_of_file.writerow(default_csv_text.split('\n'))
 
-            for row in self.delete_first_row_in_text():
+            for row in self.delete_first_row_in_text(default_csv_text):
                 content_of_file.writerow([row])
 
         File.close()
         print('Запись в файл прошла успешно.')
 
     @staticmethod
-    def delete_first_row_in_text():
-        text_without_first_row = default_text.split('\n').copy()
+    def delete_first_row_in_text(default_csv_text):
+        text_without_first_row = default_csv_text.split('\n').copy()
         del text_without_first_row[0]
 
         return text_without_first_row
 
 
 class TXTFileHandler(FileHandlerABC):
-    def write_to_file(self):
-        default_write_to_file(self.file_path)
+    def write_to_file(self, default_text):
+        default_write_to_file(self.file_path, default_text)
 
 
 class DOCFileHandler(FileHandlerABC):
-    def write_to_file(self):
-        default_write_to_file(self.file_path)
+    def write_to_file(self, default_text):
+        default_write_to_file(self.file_path, default_text)

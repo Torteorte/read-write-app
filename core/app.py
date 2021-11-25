@@ -1,7 +1,7 @@
-from core.Menu import Menu
-from core.ModeHandler import ModeHandler
-from core.FilePathHandler import FilePathHandler
-from core.FileActionHandler import FileActionHandler
+from core.menu import Menu
+from core.mode_handler import ModeHandler
+from core.file_path_handler import FilePathHandler
+from core.file_action_handler import FileActionHandler
 from constants.constants import default_menu_text
 
 

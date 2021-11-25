@@ -1,6 +1,6 @@
 import os
-from core.FileHandlerABS import CSVFileHandler, TXTFileHandler, DOCFileHandler
-from constants.constants import read_mode, write_mode, csv_extension, txt_extension, doc_extension
+from core.file_Handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
+from constants.constants import read_mode, write_mode, csv_extension, txt_extension, doc_extension, default_text
 
 
 class FileActionHandler:
@@ -27,4 +27,4 @@ class FileActionHandler:
 
         elif mode == write_mode:
             if self.file_handler_by_extension:
-                self.file_handler_by_extension.write_to_file()
+                self.file_handler_by_extension.write_to_file(default_text)

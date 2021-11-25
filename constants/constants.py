@@ -36,3 +36,18 @@ default_text = 'У Лукоморья дуб срубили\n' \
        'Следы разбитых Жигулей\n' \
        'И Мерседес на курьих ножках\n' \
        'Стоит без окон, без дверей'
+
+test_file_name = 'test/some_test.txt'
+test_text_to_write = 'Some text to write'
+test_csv_file_name = 'some_test.csv'
+csv_test_text_to_write = \
+       'Some\n' \
+       'text\n' \
+       'to, write'
+
+result_text = \
+       'Some,text,"to, write"\n' \
+       'text\n' \
+       '"to, write"\n'
+
+
