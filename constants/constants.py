@@ -9,6 +9,11 @@ doc_extension = '.doc'
 mode_one = '1'
 mode_two = '2'
 
+input_get_mode = \
+       f'{mode_one}: {read_mode} \n' \
+       f'{mode_two}: {write_mode} \n' \
+       'Выберите номер метода: \n'
+
 default_menu_text = \
        '\n ' \
        'Выберите один из следующих пунктов: \n ' \
@@ -37,9 +42,11 @@ default_text = 'У Лукоморья дуб срубили\n' \
        'И Мерседес на курьих ножках\n' \
        'Стоит без окон, без дверей'
 
-test_file_name = 'test/some_test.txt'
-test_text_to_write = 'Some text to write'
+test_txt_file_name = 'some_test.txt'
 test_csv_file_name = 'some_test.csv'
+
+test_text_to_write = 'Some text to write'
+
 csv_test_text_to_write = \
        'Some\n' \
        'text\n' \

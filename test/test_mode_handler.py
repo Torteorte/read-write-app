@@ -1,20 +1,47 @@
 import unittest
+from unittest.mock import patch
+
 from core.mode_handler import ModeHandler
 from constants.constants import read_mode, write_mode, mode_one, mode_two
 
 
 class TestModeHandler(unittest.TestCase):
     def setUp(self):
-        self.modeHandler = ModeHandler()
+        self.ModeHandler = ModeHandler()
 
     def test_check_mode(self):
-        self.assertEqual(self.modeHandler.check_mode(mode_one), read_mode)
-        self.assertEqual(self.modeHandler.check_mode(read_mode), read_mode)
-        self.assertEqual(self.modeHandler.check_mode(mode_two), write_mode)
-        self.assertEqual(self.modeHandler.check_mode(write_mode), write_mode)
-        self.assertNotEqual(self.modeHandler.check_mode(read_mode), write_mode)
-        self.assertNotEqual(self.modeHandler.check_mode(mode_two), mode_one)
-        # self.assertFalse(self.modeHandler.check_mode('3'))
+        self.assertEqual(self.ModeHandler.check_mode(mode_one), read_mode)
+        self.assertEqual(self.ModeHandler.check_mode(read_mode), read_mode)
+        self.assertEqual(self.ModeHandler.check_mode(mode_two), write_mode)
+        self.assertEqual(self.ModeHandler.check_mode(write_mode), write_mode)
+        self.assertNotEqual(self.ModeHandler.check_mode(read_mode), write_mode)
+        self.assertNotEqual(self.ModeHandler.check_mode(mode_two), mode_one)
+
+    @patch('builtins.input')
+    def test_run_menu(self, mock_input):
+        patcher = patch.object(ModeHandler, 'check_mode')
+        patched = patcher.start()
+
+        self.ModeHandler.get_mode()
+        assert patched.call_count == 1
+
+        patched.assert_called_with(self.ModeHandler.input_mode())
+        mock_input.assert_called_with('1: read \n2: write \nВыберите номер метода: \n')
+
+        patcher.stop()
+
+    @patch('builtins.print')
+    def test_false_check_mode(self, mock_print):
+        patcher = patch.object(ModeHandler, 'get_mode')
+        patched = patcher.start()
+
+        self.ModeHandler.check_mode('564')
+        assert patched.call_count == 1
+
+        patched.assert_called_with()
+        mock_print.assert_called_with('Неопознаный метод')
+
+        patcher.stop()
 
 
 if __name__ == "__main__":

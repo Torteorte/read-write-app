@@ -49,7 +49,7 @@ class CSVFileHandler(FileHandlerABC):
 
 class TXTFileHandler(FileHandlerABC):
     def write_to_file(self, default_text):
-        default_write_to_file(self.file_path, default_text)
+        return default_write_to_file(self.file_path, default_text)
 
 
 class DOCFileHandler(FileHandlerABC):

@@ -1,15 +1,14 @@
-from constants.constants import read_mode, write_mode, mode_one, mode_two
+from constants.constants import read_mode, write_mode, mode_one, mode_two, input_get_mode
 
 
 class ModeHandler:
     def get_mode(self):
-        mode = input(
-            f'{mode_one}: {read_mode} \n'
-            f'{mode_two}: {write_mode} \n'
-            'Выберите номер метода: \n'
-        )
-
+        mode = self.input_mode()
         return self.check_mode(mode)
+
+    @staticmethod
+    def input_mode():
+        return input(input_get_mode)
 
     def check_mode(self, mode):
         modes = {
