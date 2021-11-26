@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from utils.utils import default_write_to_file
-from constants.constants import test_txt_file_name, test_text_to_write
+from constants.constants import test_txt_file_name, test_text_to_write, print_success_write
 
 
 class TestDefaultWriteToFile(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestDefaultWriteToFile(unittest.TestCase):
         text = file.read()
 
         self.assertEqual(text, self.text_to_write)
-        mock_print.assert_called_with('Запись в файл прошла успешно.')
+        mock_print.assert_called_with(print_success_write)
 
         file.close()
 

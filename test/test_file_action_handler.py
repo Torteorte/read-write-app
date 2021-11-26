@@ -3,12 +3,13 @@ from unittest.mock import patch
 
 from core.file_action_handler import FileActionHandler
 from core.file_Handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
+from constants.constants import read_mode, write_mode, test_txt_extension, test_csv_extension, test_doc_extension
 
 
 class TestFileActionHandler(unittest.TestCase):
-    test_txt_extension = 'test.txt'
-    test_csv_extension = 'test.csv'
-    test_doc_extension = 'test.doc'
+    test_txt_extension = test_txt_extension
+    test_csv_extension = test_csv_extension
+    test_doc_extension = test_doc_extension
 
     def setUp(self):
         self.fileActionHandler = FileActionHandler()
@@ -32,7 +33,7 @@ class TestFileActionHandler(unittest.TestCase):
         patcher = patch.object(CSVFileHandler, 'read_file')
         patched = patcher.start()
 
-        self.fileActionHandler.do_action('read')
+        self.fileActionHandler.do_action(read_mode)
         assert patched.call_count == 1
 
     def test_do_action_write(self):
@@ -40,7 +41,7 @@ class TestFileActionHandler(unittest.TestCase):
         patched = patcher.start()
 
         self.fileActionHandler.get_file_handler_by_extension(self.test_txt_extension)
-        self.fileActionHandler.do_action('write')
+        self.fileActionHandler.do_action(write_mode)
 
         assert patched.call_count == 1
 

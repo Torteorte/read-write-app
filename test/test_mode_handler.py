@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from core.mode_handler import ModeHandler
-from constants.constants import read_mode, write_mode, mode_one, mode_two
+from constants.constants import read_mode, write_mode, mode_one, mode_two, print_unknown_method, input_get_mode
 
 
 class TestModeHandler(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestModeHandler(unittest.TestCase):
         assert patched.call_count == 1
 
         patched.assert_called_with(self.ModeHandler.input_mode())
-        mock_input.assert_called_with('1: read \n2: write \nВыберите номер метода: \n')
+        mock_input.assert_called_with(input_get_mode)
 
         patcher.stop()
 
@@ -40,7 +40,7 @@ class TestModeHandler(unittest.TestCase):
         assert patched.call_count == 1
 
         patched.assert_called_with()
-        mock_print.assert_called_with('Неопознаный метод')
+        mock_print.assert_called_with(print_unknown_method)
 
         patcher.stop()
 

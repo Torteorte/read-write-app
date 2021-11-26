@@ -2,7 +2,7 @@ import csv
 from abc import ABC, abstractmethod
 
 from utils.utils import default_write_to_file
-from constants.constants import number_of_string_for_read
+from constants.constants import number_of_string_for_read, print_empty_file, print_success_write
 
 
 class FileHandlerABC(ABC):
@@ -22,7 +22,7 @@ class FileHandlerABC(ABC):
                 break
 
         if counter == 0:
-            print('Пустой файл')
+            print(print_empty_file)
 
         file.close()
 
@@ -41,7 +41,7 @@ class CSVFileHandler(FileHandlerABC):
                 content_of_file.writerow([row])
 
         File.close()
-        print('Запись в файл прошла успешно.')
+        print(print_success_write)
 
     @staticmethod
     def delete_first_row_in_text(default_csv_text):

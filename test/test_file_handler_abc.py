@@ -2,23 +2,23 @@ import os
 import unittest
 from unittest.mock import patch
 
-from core.file_Handler_abc import FileHandlerABC, CSVFileHandler, TXTFileHandler, DOCFileHandler
+from core.file_Handler_abc import FileHandlerABC, CSVFileHandler, TXTFileHandler
 from constants.constants import csv_test_text_to_write, test_csv_file_name, csv_result_text, test_text_to_write, \
-    test_txt_file_name, test_txt_file_empty
+    test_txt_file_name, test_txt_file_empty, print_empty_file, print_success_write
 
 
 class TestCSVFileHandler(unittest.TestCase):
-    test_csv_file = test_csv_file_name
+    csv_file = test_csv_file_name
+    csv_result_text = csv_result_text
     csv_text_to_write = csv_test_text_to_write
-    result_text = csv_result_text
 
-    txt_text_to_write = test_text_to_write
     txt_file = test_txt_file_name
+    txt_text_to_write = test_text_to_write
 
     empty_txt_file = test_txt_file_empty
 
     def setUp(self):
-        self.CSVFileHandler = CSVFileHandler(self.test_csv_file)
+        self.CSVFileHandler = CSVFileHandler(self.csv_file)
         self.TXTFileHandler = TXTFileHandler(self.txt_file)
         self.TXT_empty = TXTFileHandler(self.empty_txt_file)
 
@@ -35,21 +35,21 @@ class TestCSVFileHandler(unittest.TestCase):
     @patch('builtins.print')
     def test_read_empty_file(self, mock_print):
         self.TXT_empty.read_file()
-        mock_print.assert_called_with('Пустой файл')
+        mock_print.assert_called_with(print_empty_file)
 
     @patch('builtins.print')
     def test_csv_write_to_file(self, mock_print):
         self.CSVFileHandler.write_to_file(self.csv_text_to_write)
 
-        file = open(self.test_csv_file, 'r')
+        file = open(self.csv_file, 'r')
         text = file.read()
 
-        self.assertEqual(text, self.result_text)
+        self.assertEqual(text, self.csv_result_text)
 
         file.close()
-        os.remove(self.test_csv_file)
+        os.remove(self.csv_file)
 
-        mock_print.assert_called_with('Запись в файл прошла успешно.')
+        mock_print.assert_called_with(print_success_write)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import os
 from core.menu import Menu
-from constants.constants import csv_extension, txt_extension, doc_extension, file_handler_menu_text
+from constants.constants import csv_extension, txt_extension, doc_extension, file_handler_menu_text, input_file_path, \
+    print_wrong_path, print_wrong_extension
 
 
 class FilePathHandler:
@@ -13,7 +14,7 @@ class FilePathHandler:
         self.valid_status = False
 
     def get_file_path(self):
-        file_path = input('Путь к файлу: ')
+        file_path = input(input_file_path)
         return self.check_file(file_path)
 
     def validate_file_path(self, file_path):
@@ -38,7 +39,7 @@ class FilePathHandler:
         file_status = os.path.exists(file_path)
 
         if not file_status:
-            print('Такого файла или пути не существует')
+            print(print_wrong_path)
             raise TypeError()
 
     @staticmethod
@@ -47,7 +48,7 @@ class FilePathHandler:
         allowed_extensions = [csv_extension, txt_extension, doc_extension]
 
         if file_extension not in allowed_extensions:
-            print('Неверное расширение файла. Валидные расширения .csv, .txt, .doc')
+            print(print_wrong_extension)
             raise TypeError()
 
     def handler_wrong_path(self):

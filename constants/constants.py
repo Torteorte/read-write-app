@@ -42,6 +42,15 @@ default_text = 'У Лукоморья дуб срубили\n' \
        'И Мерседес на курьих ножках\n' \
        'Стоит без окон, без дверей'
 
+
+test_jp = 'test.木'
+test_csv = 'mythic.csv'
+test_txt = 'text_files/some_test.txt'
+
+test_txt_extension = 'test.txt'
+test_csv_extension = 'test.csv'
+test_doc_extension = 'test.doc'
+
 test_csv_file_name = 'text_files/some_test.csv'
 test_txt_file_name = 'text_files/some_test.txt'
 test_txt_file_empty = 'text_files/test_empty.txt'
@@ -58,4 +67,10 @@ csv_result_text = \
        'text\n' \
        '"to, write"\n'
 
-
+print_empty_file = 'Пустой файл.'
+input_file_path = 'Путь к файлу: '
+print_wrong_item = 'Такого пункта нет.'
+print_unknown_method = 'Неопознаный метод'
+print_success_write = 'Запись в файл прошла успешно.'
+print_wrong_path = 'Такого файла или пути не существует'
+print_wrong_extension = 'Неверное расширение файла. Валидные расширения .csv, .txt, .doc'

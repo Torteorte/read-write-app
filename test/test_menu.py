@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from core.menu import Menu
+from constants.constants import print_wrong_item
 
 
 class TestMenu(unittest.TestCase):
@@ -61,7 +62,7 @@ class TestMenu(unittest.TestCase):
         assert patched.call_count == 1
 
         patched.assert_called_with(self.test_menu_modes)
-        mock_print.assert_called_with('Такого пункта нет.')
+        mock_print.assert_called_with(print_wrong_item)
 
         patcher.stop()
 

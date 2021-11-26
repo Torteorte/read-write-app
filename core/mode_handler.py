@@ -1,4 +1,4 @@
-from constants.constants import read_mode, write_mode, mode_one, mode_two, input_get_mode
+from constants.constants import read_mode, write_mode, mode_one, mode_two, input_get_mode, print_unknown_method
 
 
 class ModeHandler:
@@ -23,5 +23,5 @@ class ModeHandler:
             return mode
 
         else:
-            print('Неопознаный метод')
+            print(print_unknown_method)
             return self.get_mode()

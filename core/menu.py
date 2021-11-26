@@ -1,3 +1,6 @@
+from constants.constants import print_wrong_item
+
+
 class Menu:
     def __init__(self, menu_text):
         self.menu_text = menu_text
@@ -14,5 +17,5 @@ class Menu:
             return menu_modes[menu_number]()
 
         else:
-            print('Такого пункта нет.')
+            print(print_wrong_item)
             self.run_menu(menu_modes)

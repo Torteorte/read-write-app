@@ -2,12 +2,13 @@ import unittest
 from unittest.mock import patch
 
 from core.file_path_handler import FilePathHandler
+from constants.constants import test_txt, test_csv, test_jp, input_file_path, print_wrong_path, print_wrong_extension
 
 
 class TestFileHandler(unittest.TestCase):
-    test_txt = 'text_files/some_test.txt'
-    test_csv = 'mythic.csv'
-    test_jp = 'test.木'
+    test_txt = test_txt
+    test_csv = test_csv
+    test_jp = test_jp
 
     def setUp(self):
         self.FilePathHandler = FilePathHandler('', '')
@@ -28,14 +29,14 @@ class TestFileHandler(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.FilePathHandler.check_file_status(self.test_jp)
 
-        mock_print.assert_called_with('Такого файла или пути не существует')
+        mock_print.assert_called_with(print_wrong_path)
 
     @patch('builtins.print')
     def test_invalid_check_file_extension(self, mock_print):
         with self.assertRaises(TypeError):
             self.FilePathHandler.check_file_extension(self.test_jp)
 
-        mock_print.assert_called_with('Неверное расширение файла. Валидные расширения .csv, .txt, .doc')
+        mock_print.assert_called_with(print_wrong_extension)
 
     def test_check_file(self):
         self.assertEqual(self.FilePathHandler.check_file(self.test_txt), self.test_txt)
@@ -49,10 +50,9 @@ class TestFileHandler(unittest.TestCase):
         assert patched.call_count == 1
 
         patched.assert_called_with()
-        mock_print.assert_called_with('Такого файла или пути не существует')
+        mock_print.assert_called_with(print_wrong_path)
 
         patcher.stop()
-
 
     @patch('builtins.input')
     def test_get_file_path(self, mock_input):
@@ -62,8 +62,8 @@ class TestFileHandler(unittest.TestCase):
         self.FilePathHandler.get_file_path()
         assert patched.call_count == 1
 
-        patched.assert_called_with(input('Путь к файлу: '))
-        mock_input('Путь к файлу: ')
+        patched.assert_called_with(input(input_file_path))
+        mock_input.assert_called_with(input_file_path)
 
         patcher.stop()
 
