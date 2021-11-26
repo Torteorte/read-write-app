@@ -1,40 +1,55 @@
 import os
 import unittest
+from unittest.mock import patch
 
-from core.file_Handler_abc import CSVFileHandler, TXTFileHandler
-from constants.constants import csv_test_text_to_write, test_csv_file_name, result_text, test_text_to_write, \
-    test_txt_file_name
+from core.file_Handler_abc import FileHandlerABC, CSVFileHandler, TXTFileHandler, DOCFileHandler
+from constants.constants import csv_test_text_to_write, test_csv_file_name, csv_result_text, test_text_to_write, \
+    test_txt_file_name, test_txt_file_empty
 
 
 class TestCSVFileHandler(unittest.TestCase):
-    test_file_name = test_csv_file_name
-    text_to_write = csv_test_text_to_write
-    result_text = result_text
-    test_text_to_write = test_text_to_write
-    test_txt_file_name = test_txt_file_name
+    test_csv_file = test_csv_file_name
+    csv_text_to_write = csv_test_text_to_write
+    result_text = csv_result_text
+
+    txt_text_to_write = test_text_to_write
+    txt_file = test_txt_file_name
+
+    empty_txt_file = test_txt_file_empty
 
     def setUp(self):
-        self.CSVFileHandler = CSVFileHandler(self.test_file_name)
-        self.TXTFileHandler = TXTFileHandler(self.test_txt_file_name)
+        self.CSVFileHandler = CSVFileHandler(self.test_csv_file)
+        self.TXTFileHandler = TXTFileHandler(self.txt_file)
+        self.TXT_empty = TXTFileHandler(self.empty_txt_file)
 
-    def test_read_file(self):
-        file = open(self.test_txt_file_name, 'r')
-        text = file.read()
+    @patch("core.file_Handler_abc.FileHandlerABC.__abstractmethods__", set())
+    def test_write_to_file(self):
+        file_handler_abc = FileHandlerABC('')
+        self.assertIsNone(file_handler_abc.write_to_file(''))
 
-        self.assertEqual(text, self.test_text_to_write)
+    @patch('builtins.print')
+    def test_read_file(self, mock_print):
+        self.TXTFileHandler.read_file()
+        mock_print.assert_called_with(self.txt_text_to_write)
 
-        file.close()
+    @patch('builtins.print')
+    def test_read_empty_file(self, mock_print):
+        self.TXT_empty.read_file()
+        mock_print.assert_called_with('Пустой файл')
 
-    def test_csv_write_to_file(self):
-        self.CSVFileHandler.write_to_file(self.text_to_write)
+    @patch('builtins.print')
+    def test_csv_write_to_file(self, mock_print):
+        self.CSVFileHandler.write_to_file(self.csv_text_to_write)
 
-        file = open(self.test_file_name, 'r')
+        file = open(self.test_csv_file, 'r')
         text = file.read()
 
         self.assertEqual(text, self.result_text)
 
         file.close()
-        os.remove(self.test_file_name)
+        os.remove(self.test_csv_file)
+
+        mock_print.assert_called_with('Запись в файл прошла успешно.')
 
 
 if __name__ == "__main__":

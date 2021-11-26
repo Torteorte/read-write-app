@@ -1,5 +1,6 @@
 import csv
 from abc import ABC, abstractmethod
+
 from utils.utils import default_write_to_file
 from constants.constants import number_of_string_for_read
 
@@ -9,6 +10,7 @@ class FileHandlerABC(ABC):
         self.file_path = file_path
 
     def read_file(self):
+
         file = open(self.file_path, 'r')
         counter = 0
 
@@ -21,6 +23,8 @@ class FileHandlerABC(ABC):
 
         if counter == 0:
             print('Пустой файл')
+
+        file.close()
 
     @abstractmethod
     def write_to_file(self, text):
@@ -49,7 +53,7 @@ class CSVFileHandler(FileHandlerABC):
 
 class TXTFileHandler(FileHandlerABC):
     def write_to_file(self, default_text):
-        return default_write_to_file(self.file_path, default_text)
+        default_write_to_file(self.file_path, default_text)
 
 
 class DOCFileHandler(FileHandlerABC):

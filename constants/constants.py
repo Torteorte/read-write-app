@@ -42,8 +42,9 @@ default_text = 'У Лукоморья дуб срубили\n' \
        'И Мерседес на курьих ножках\n' \
        'Стоит без окон, без дверей'
 
-test_txt_file_name = 'some_test.txt'
-test_csv_file_name = 'some_test.csv'
+test_csv_file_name = 'text_files/some_test.csv'
+test_txt_file_name = 'text_files/some_test.txt'
+test_txt_file_empty = 'text_files/test_empty.txt'
 
 test_text_to_write = 'Some text to write'
 
@@ -52,7 +53,7 @@ csv_test_text_to_write = \
        'text\n' \
        'to, write'
 
-result_text = \
+csv_result_text = \
        'Some,text,"to, write"\n' \
        'text\n' \
        '"to, write"\n'

@@ -43,11 +43,13 @@ class TestMenu(unittest.TestCase):
 
         patched.assert_called_with(self.menu.get_menu_number(), self.test_menu_modes)
         mock_input.assert_called_with(self.menu_test_text)
+
         patcher.stop()
 
     @patch('builtins.input')
     def test_get_menu_number(self, mock_input):
         self.menu.get_menu_number()
+
         mock_input.assert_called_with(self.menu_test_text)
 
     @patch('builtins.print')
@@ -60,6 +62,7 @@ class TestMenu(unittest.TestCase):
 
         patched.assert_called_with(self.test_menu_modes)
         mock_print.assert_called_with('Такого пункта нет.')
+
         patcher.stop()
 
 

@@ -14,6 +14,7 @@ class TestModeHandler(unittest.TestCase):
         self.assertEqual(self.ModeHandler.check_mode(read_mode), read_mode)
         self.assertEqual(self.ModeHandler.check_mode(mode_two), write_mode)
         self.assertEqual(self.ModeHandler.check_mode(write_mode), write_mode)
+
         self.assertNotEqual(self.ModeHandler.check_mode(read_mode), write_mode)
         self.assertNotEqual(self.ModeHandler.check_mode(mode_two), mode_one)
 

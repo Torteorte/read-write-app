@@ -38,6 +38,7 @@ class FilePathHandler:
         file_status = os.path.exists(file_path)
 
         if not file_status:
+            print('Такого файла или пути не существует')
             raise TypeError()
 
     @staticmethod
@@ -56,7 +57,5 @@ class FilePathHandler:
             '2': self.get_file_path,
             '3': self.exit_callback,
         }
-
-        print('Такого файла или пути не существует')
 
         return self.menu.run_menu(menu_path_handler_modes)
