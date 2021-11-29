@@ -2,8 +2,8 @@ import unittest
 from unittest.mock import patch
 
 from core.app import App
-from constants.constants import print_good_bye, path_of_get_mode, path_of_get_file_path, path_of_start_action_with_file, \
-    path_of_show_menu
+from constants.constants import print_good_bye, path_of_get_mode, path_of_get_file_path, \
+    path_of_start_action_with_file, path_of_show_menu
 
 
 class TestApp(unittest.TestCase):

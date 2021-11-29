@@ -29,10 +29,9 @@ class TestFileHandlerABC(unittest.TestCase):
         file_handler_abc = FileHandlerABC('')
         self.assertIsNone(file_handler_abc.write_to_file(''))
 
-    # TODO: FIX THIS
-
     @patch('builtins.print')
     def test_read_file(self, mock_print):
+        self.txt_file_handler.write_to_file(self.txt_text_to_write)
         self.txt_file_handler.read_file()
         mock_print.assert_called_with(self.txt_text_to_write)
 
