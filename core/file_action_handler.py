@@ -1,5 +1,5 @@
 import os
-from core.file_Handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
+from core.file_handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
 from constants.constants import read_mode, write_mode, csv_extension, txt_extension, doc_extension, default_text
 
 

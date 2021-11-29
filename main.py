@@ -11,5 +11,5 @@ def start_app():
     reader_app.handler_call_menu()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     start_app()

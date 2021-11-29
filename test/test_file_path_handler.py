@@ -41,31 +41,27 @@ class TestFileHandler(unittest.TestCase):
     def test_check_file(self):
         self.assertEqual(self.FilePathHandler.check_file(self.test_txt), self.test_txt)
 
+    @patch('core.file_path_handler.FilePathHandler.handler_wrong_path')
     @patch('builtins.print')
-    def test_invalid_file_path(self, mock_print):
-        patcher = patch.object(FilePathHandler, 'handler_wrong_path')
-        patched = patcher.start()
-
+    def test_invalid_file_path(self, mock_print, mock_handler_wrong_path):
         self.FilePathHandler.check_file(self.test_jp)
-        assert patched.call_count == 1
 
-        patched.assert_called_with()
+        self.assertTrue(mock_handler_wrong_path.called)
         mock_print.assert_called_with(print_wrong_path)
 
-        patcher.stop()
-
+    @patch('core.file_path_handler.FilePathHandler.check_file')
     @patch('builtins.input')
-    def test_get_file_path(self, mock_input):
-        patcher = patch.object(FilePathHandler, 'check_file')
-        patched = patcher.start()
-
+    def test_get_file_path(self, mock_input, mock_check_file):
         self.FilePathHandler.get_file_path()
-        assert patched.call_count == 1
 
-        patched.assert_called_with(input(input_file_path))
+        self.assertTrue(mock_check_file.called)
+        mock_check_file.assert_called_with(input(input_file_path))
         mock_input.assert_called_with(input_file_path)
 
-        patcher.stop()
+    @patch('core.menu.Menu.run_menu')
+    def test_handler_wrong_path(self, mock_run_menu):
+        self.FilePathHandler.handler_wrong_path()
+        self.assertTrue(mock_run_menu.called)
 
 
 if __name__ == '__main__':

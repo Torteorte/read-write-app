@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from core.file_action_handler import FileActionHandler
-from core.file_Handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
+from core.file_handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
 from constants.constants import read_mode, write_mode, test_txt_extension, test_csv_extension, test_doc_extension
 
 
@@ -27,23 +27,17 @@ class TestFileActionHandler(unittest.TestCase):
         self.assertNotIsInstance(self.fileActionHandler.get_file_handler_by_extension(self.test_txt_extension),
                                  type(DOCFileHandler(self.test_txt_extension)))
 
-    def test_do_action_read(self):
+    @patch('core.file_handler_abc.CSVFileHandler.read_file')
+    def test_do_action_read(self, mock_read_file):
         self.fileActionHandler.get_file_handler_by_extension(self.test_csv_extension)
-
-        patcher = patch.object(CSVFileHandler, 'read_file')
-        patched = patcher.start()
-
         self.fileActionHandler.do_action(read_mode)
-        assert patched.call_count == 1
+        self.assertTrue(mock_read_file.called)
 
-    def test_do_action_write(self):
-        patcher = patch.object(TXTFileHandler, 'write_to_file')
-        patched = patcher.start()
-
+    @patch('core.file_handler_abc.TXTFileHandler.write_to_file')
+    def test_do_action_write(self, mock_write_to_file):
         self.fileActionHandler.get_file_handler_by_extension(self.test_txt_extension)
         self.fileActionHandler.do_action(write_mode)
-
-        assert patched.call_count == 1
+        self.assertTrue(mock_write_to_file.called)
 
 
 if __name__ == '__main__':

@@ -34,37 +34,27 @@ class TestMenu(unittest.TestCase):
         self.assertEqual(self.menu.checkout_number(self.test_number2, self.test_menu_modes), self.test2())
         self.assertNotEqual(self.menu.checkout_number(self.test_number3, self.test_menu_modes), self.test1())
 
+    @patch('core.menu.Menu.checkout_number')
     @patch('builtins.input')
-    def test_run_menu(self, mock_input):
-        patcher = patch.object(Menu, 'checkout_number')
-        patched = patcher.start()
-
+    def test_run_menu(self, mock_input, mock_checkout_number):
         self.menu.run_menu(self.test_menu_modes)
-        assert patched.call_count == 1
 
-        patched.assert_called_with(self.menu.get_menu_number(), self.test_menu_modes)
+        self.assertTrue(mock_checkout_number.called)
         mock_input.assert_called_with(self.menu_test_text)
-
-        patcher.stop()
 
     @patch('builtins.input')
     def test_get_menu_number(self, mock_input):
         self.menu.get_menu_number()
-
         mock_input.assert_called_with(self.menu_test_text)
 
+    @patch('core.menu.Menu.run_menu')
     @patch('builtins.print')
-    def test_false_get_menu_number(self, mock_print):
-        patcher = patch.object(Menu, 'run_menu')
-        patched = patcher.start()
-
+    def test_false_get_menu_number(self, mock_print, mock_run_menu):
         self.menu.checkout_number('4', self.test_menu_modes)
-        assert patched.call_count == 1
 
-        patched.assert_called_with(self.test_menu_modes)
+        mock_run_menu.assert_called_with(self.test_menu_modes)
+        self.assertTrue(mock_run_menu.called)
         mock_print.assert_called_with(print_wrong_item)
-
-        patcher.stop()
 
 
 if __name__ == "__main__":

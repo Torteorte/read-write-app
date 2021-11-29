@@ -12,16 +12,14 @@ class FileHandlerABC(ABC):
     def read_file(self):
 
         file = open(self.file_path, 'r')
+        line = file.read().split('\n')
         counter = 0
 
-        for line in file:
-            print(line.strip())
+        while counter < number_of_string_for_read and counter != len(line):
+            print(line[counter])
             counter += 1
 
-            if counter == number_of_string_for_read:
-                break
-
-        if counter == 0:
+        if line == ['']:
             print(print_empty_file)
 
         file.close()
@@ -53,9 +51,9 @@ class CSVFileHandler(FileHandlerABC):
 
 class TXTFileHandler(FileHandlerABC):
     def write_to_file(self, default_text):
-        default_write_to_file(self.file_path, default_text)
+        return default_write_to_file(self.file_path, default_text)
 
 
 class DOCFileHandler(FileHandlerABC):
     def write_to_file(self, default_text):
-        default_write_to_file(self.file_path, default_text)
+        return default_write_to_file(self.file_path, default_text)

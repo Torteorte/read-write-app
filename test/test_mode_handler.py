@@ -18,31 +18,21 @@ class TestModeHandler(unittest.TestCase):
         self.assertNotEqual(self.ModeHandler.check_mode(read_mode), write_mode)
         self.assertNotEqual(self.ModeHandler.check_mode(mode_two), mode_one)
 
+    @patch('core.mode_handler.ModeHandler.check_mode')
     @patch('builtins.input')
-    def test_run_menu(self, mock_input):
-        patcher = patch.object(ModeHandler, 'check_mode')
-        patched = patcher.start()
-
+    def test_run_menu(self, mock_input, mock_check_mode):
         self.ModeHandler.get_mode()
-        assert patched.call_count == 1
 
-        patched.assert_called_with(self.ModeHandler.input_mode())
+        self.assertTrue(mock_check_mode.called)
         mock_input.assert_called_with(input_get_mode)
 
-        patcher.stop()
-
+    @patch('core.mode_handler.ModeHandler.get_mode')
     @patch('builtins.print')
-    def test_false_check_mode(self, mock_print):
-        patcher = patch.object(ModeHandler, 'get_mode')
-        patched = patcher.start()
+    def test_false_check_mode(self, mock_print, mock_get_mode):
 
         self.ModeHandler.check_mode('564')
-        assert patched.call_count == 1
-
-        patched.assert_called_with()
+        self.assertTrue(mock_get_mode.called)
         mock_print.assert_called_with(print_unknown_method)
-
-        patcher.stop()
 
 
 if __name__ == "__main__":

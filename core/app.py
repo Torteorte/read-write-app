@@ -2,7 +2,7 @@ from core.menu import Menu
 from core.mode_handler import ModeHandler
 from core.file_path_handler import FilePathHandler
 from core.file_action_handler import FileActionHandler
-from constants.constants import default_menu_text
+from constants.constants import default_menu_text, print_good_bye
 
 
 class App:
@@ -47,7 +47,7 @@ class App:
         self.start_action_with_file()
 
     def end_app(self):
-        print('Всего доброго.')
+        print(print_good_bye)
         self.exit = True
 
     def handler_call_menu(self):
