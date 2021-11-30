@@ -2,7 +2,8 @@ import unittest
 from unittest.mock import patch
 
 from utils.utils import default_write_to_file
-from constants.constants import test_txt_file_name, test_text_to_write, print_success_write
+from constants.constants import print_success_write
+from test.constants.constatns import test_txt_file_name, test_text_to_write
 
 
 class TestDefaultWriteToFile(unittest.TestCase):

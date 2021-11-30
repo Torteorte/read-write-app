@@ -2,7 +2,8 @@ import unittest
 from unittest.mock import patch
 
 from core.file_path_handler import FilePathHandler
-from constants.constants import test_txt, test_csv, test_jp, input_file_path, print_wrong_path, print_wrong_extension
+from constants.constants import input_file_path, print_wrong_path, print_wrong_extension
+from test.constants.constatns import test_jp, test_csv, test_txt
 
 
 class TestFileHandler(unittest.TestCase):
@@ -11,23 +12,23 @@ class TestFileHandler(unittest.TestCase):
     test_jp = test_jp
 
     def setUp(self):
-        self.FilePathHandler = FilePathHandler('', '')
+        self.FilePathHandler = FilePathHandler('')
         open(self.test_txt, 'w').close()
 
-    def test_check_file_status(self):
-        self.assertRaises(TypeError, self.FilePathHandler.check_file_status(self.test_txt))
+    def test_check_file_is_exist(self):
+        self.assertRaises(TypeError, self.FilePathHandler.check_file_is_exist(self.test_txt))
 
     def test_valid_check_file_extension(self):
         self.assertRaises(TypeError, self.FilePathHandler.check_file_extension(self.test_txt))
         self.assertRaises(TypeError, self.FilePathHandler.check_file_extension(self.test_csv))
 
     @patch('builtins.print')
-    def test_invalid_check_file_status(self, mock_print):
+    def test_invalid_check_file_is_exist(self, mock_print):
         with self.assertRaises(TypeError):
-            self.FilePathHandler.check_file_status(self.test_csv)
+            self.FilePathHandler.check_file_is_exist(self.test_csv)
 
         with self.assertRaises(TypeError):
-            self.FilePathHandler.check_file_status(self.test_jp)
+            self.FilePathHandler.check_file_is_exist(self.test_jp)
 
         mock_print.assert_called_with(print_wrong_path)
 

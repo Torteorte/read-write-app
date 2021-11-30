@@ -3,8 +3,9 @@ import unittest
 from unittest.mock import patch
 
 from core.file_handler_abc import FileHandlerABC, CSVFileHandler, TXTFileHandler, DOCFileHandler
-from constants.constants import csv_test_text_to_write, test_csv_file_name, csv_result_text, test_text_to_write, \
-    test_txt_file_name, test_txt_file_empty, print_empty_file, print_success_write, test_doc_file_name
+from constants.constants import print_empty_file, print_success_write
+from test.constants.constatns import test_csv_file_name, test_txt_file_name, test_doc_file_name, test_txt_file_empty, \
+    test_text_to_write, csv_test_text_to_write, csv_result_text
 
 
 class TestFileHandlerABC(unittest.TestCase):
@@ -21,8 +22,8 @@ class TestFileHandlerABC(unittest.TestCase):
     def setUp(self):
         self.csv_file_handler = CSVFileHandler(self.csv_file)
         self.txt_file_handler = TXTFileHandler(self.txt_file)
-        self.txt_empty = TXTFileHandler(self.empty_txt_file)
         self.doc_file_handler = DOCFileHandler(self.doc_file)
+        self.txt_empty = TXTFileHandler(self.empty_txt_file)
 
     @patch("core.file_handler_abc.FileHandlerABC.__abstractmethods__", set())
     def test_write_to_file(self):
