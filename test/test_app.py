@@ -15,7 +15,7 @@ class TestApp(unittest.TestCase):
 
     @patch(path_of_get_mode)
     @patch(path_of_get_file_path)
-    def test_init_properties(self, mock_get_mode, mock_get_file_path):
+    def test_init_properties(self, mock_get_file_path, mock_get_mode):
         app = App()
         self.assertTrue(mock_get_mode.called)
         self.assertTrue(mock_get_file_path.get_file_path)
@@ -23,7 +23,7 @@ class TestApp(unittest.TestCase):
     @patch('core.file_action_handler.FileActionHandler.get_file_handler_by_extension')
     @patch('core.file_action_handler.FileActionHandler.do_action')
     @patch('core.app.App.handler_call_menu')
-    def test_start_action_with_file(self, mock_get_file_handler_by_extension, mock_do_action, mock_handler_call_menu):
+    def test_start_action_with_file(self, mock_handler_call_menu, mock_do_action,  mock_get_file_handler_by_extension):
         self.app.start_action_with_file()
         self.assertTrue(mock_get_file_handler_by_extension.called)
         self.assertTrue(mock_do_action.called)
@@ -31,14 +31,14 @@ class TestApp(unittest.TestCase):
 
     @patch(path_of_get_mode)
     @patch(path_of_start_action_with_file)
-    def test_change_mode(self, mock_get_mode, mock_start_action_with_file):
+    def test_change_mode(self, mock_start_action_with_file, mock_get_mode):
         self.app.change_mode()
         self.assertTrue(mock_get_mode.called)
         self.assertTrue(mock_start_action_with_file.called)
 
     @patch(path_of_get_file_path)
     @patch(path_of_start_action_with_file)
-    def test_change_file_path(self, mock_get_file_path, mock_start_action_with_file):
+    def test_change_file_path(self, mock_start_action_with_file, mock_get_file_path):
         self.app.change_file_path()
         self.assertTrue(mock_get_file_path.called)
         self.assertTrue(mock_start_action_with_file.called)
@@ -46,7 +46,7 @@ class TestApp(unittest.TestCase):
     @patch(path_of_get_mode)
     @patch(path_of_get_file_path)
     @patch(path_of_start_action_with_file)
-    def test_change_mode_and_file_path(self, mock_get_mode, mock_get_file_path, mock_start_action_with_file):
+    def test_change_mode_and_file_path(self, mock_start_action_with_file, mock_get_file_path, mock_get_mode):
         self.app.change_mode_and_file_path()
         self.assertTrue(mock_get_mode.called)
         self.assertTrue(mock_get_file_path.called)
