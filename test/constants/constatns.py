@@ -1,4 +1,4 @@
-from test.utils.utils import test_function_one, test_function_two, test_function_three
+from test.utils.utils import test_function_one, test_function_two
 
 
 test_jp = 'test.木'
@@ -11,6 +11,7 @@ test_doc_extension = 'test.doc'
 
 test_csv_file_name = 'text_files/some_test.csv'
 test_txt_file_name = 'text_files/some_test.txt'
+test_txt_file_name_for_read = 'text_files/file_for_read.txt'
 test_doc_file_name = 'text_files/some_test.doc'
 test_txt_file_empty = 'text_files/test_empty.txt'
 

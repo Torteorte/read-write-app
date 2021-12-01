@@ -6,8 +6,6 @@ from main import start_app, init_app
 
 
 class TestMain(unittest.TestCase):
-    def setUp(self):
-        pass
 
     @patch('core.app.App.init_properties')
     def test_init_app(self, *args):

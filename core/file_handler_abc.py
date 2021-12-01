@@ -8,11 +8,11 @@ from constants.constants import number_of_string_for_read, print_empty_file, pri
 class FileHandlerABC(ABC):
     @abstractmethod
     def read_file(self):
-        pass
+        raise NotImplementedError('Определите read_file в %s.' % self.__class__.__name__)
 
     @abstractmethod
     def write_to_file(self, text):
-        pass
+        raise NotImplementedError('Определите write_to_file в %s.' % self.__class__.__name__)
 
 
 class FileHandler:

@@ -1,54 +1,18 @@
 import unittest
 from unittest.mock import patch
 
+from core.menu import Menu
+from core.custom_error import CustomError
 from core.file_path_handler import FilePathHandler
-from constants.constants import input_file_path, print_wrong_path, print_wrong_extension
-from test.constants.constatns import test_jp, test_csv, test_txt
+
+from constants.constants import input_file_path, print_wrong_path, print_wrong_extension, default_menu_text
+from test.constants.constatns import test_jp, test_csv, test_txt, test_menu_modes
 
 
 class TestFileHandler(unittest.TestCase):
-    test_txt = test_txt
-    test_csv = test_csv
-    test_jp = test_jp
-
     def setUp(self):
-        self.FilePathHandler = FilePathHandler('')
-        open(self.test_txt, 'w').close()
-
-    def test_check_file_is_exist(self):
-        self.assertRaises(TypeError, self.FilePathHandler.check_file_is_exist(self.test_txt))
-
-    def test_valid_check_file_extension(self):
-        self.assertRaises(TypeError, self.FilePathHandler.check_file_extension(self.test_txt))
-        self.assertRaises(TypeError, self.FilePathHandler.check_file_extension(self.test_csv))
-
-    @patch('builtins.print')
-    def test_invalid_check_file_is_exist(self, mock_print):
-        with self.assertRaises(TypeError):
-            self.FilePathHandler.check_file_is_exist(self.test_csv)
-
-        with self.assertRaises(TypeError):
-            self.FilePathHandler.check_file_is_exist(self.test_jp)
-
-        mock_print.assert_called_with(print_wrong_path)
-
-    @patch('builtins.print')
-    def test_invalid_check_file_extension(self, mock_print):
-        with self.assertRaises(TypeError):
-            self.FilePathHandler.check_file_extension(self.test_jp)
-
-        mock_print.assert_called_with(print_wrong_extension)
-
-    def test_check_file(self):
-        self.assertEqual(self.FilePathHandler.check_file(self.test_txt), self.test_txt)
-
-    @patch('core.file_path_handler.FilePathHandler.handler_wrong_path')
-    @patch('builtins.print')
-    def test_invalid_file_path(self, mock_print, mock_handler_wrong_path):
-        self.FilePathHandler.check_file(self.test_jp)
-
-        self.assertTrue(mock_handler_wrong_path.called)
-        mock_print.assert_called_with(print_wrong_path)
+        self.menu = Menu(default_menu_text, test_menu_modes)
+        self.FilePathHandler = FilePathHandler(self.menu)
 
     @patch('core.file_path_handler.FilePathHandler.check_file')
     @patch('builtins.input')
@@ -58,6 +22,40 @@ class TestFileHandler(unittest.TestCase):
         self.assertTrue(mock_check_file.called)
         mock_check_file.assert_called_with(input(input_file_path))
         mock_input.assert_called_with(input_file_path)
+
+    def test_check_file(self):
+        self.assertEqual(self.FilePathHandler.check_file(test_txt), test_txt)
+
+    @patch('builtins.print')
+    @patch('core.file_path_handler.FilePathHandler.handler_wrong_path')
+    def test_false_check_file(self, mock_handler_wrong_path, *args):
+        self.FilePathHandler.check_file(test_csv)
+
+        self.assertTrue(mock_handler_wrong_path.called)
+
+    def test_check_file_is_exist(self):
+        try:
+            self.FilePathHandler.check_file_is_exist(test_txt)
+        except CustomError:
+            self.fail("Unexpected raise!")
+
+    def test_check_file_extension(self):
+        try:
+            self.FilePathHandler.check_file_extension(test_txt)
+        except CustomError:
+            self.fail("Unexpected raise!")
+
+    def test_false_check_file_is_exist(self):
+        with self.assertRaises(CustomError) as context:
+            self.FilePathHandler.check_file_is_exist(test_csv)
+
+        self.assertEqual(context.exception.text, print_wrong_path)
+
+    def test_false_check_file_extension(self):
+        with self.assertRaises(CustomError) as context:
+            self.FilePathHandler.check_file_extension(test_jp)
+
+        self.assertEqual(context.exception.text, print_wrong_extension)
 
     @patch('core.menu.Menu.run_menu')
     def test_handler_wrong_path(self, mock_run_menu):

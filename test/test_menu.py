@@ -24,10 +24,10 @@ class TestMenu(unittest.TestCase):
     @patch('core.menu.Menu.checkout_number')
     @patch('builtins.input')
     def test_menu_modes_is_none(self, *args):
-        menu_none_mods = Menu(menu_test_text)
+        menu_none_mods = Menu(menu_test_text, test_menu_modes)
         menu_none_mods.run_menu()
 
-        self.assertIsNone(menu_none_mods._menu_modes)
+        self.assertIsNotNone(menu_none_mods._menu_modes)
 
     @patch('builtins.input')
     def test_get_menu_number(self, mock_input):

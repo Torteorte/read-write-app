@@ -11,6 +11,11 @@ allowed_extensions = [csv_extension, txt_extension, doc_extension]
 mode_one = '1'
 mode_two = '2'
 
+modes = {
+       mode_one: read_mode,
+       mode_two: write_mode
+}
+
 input_get_mode = \
        f'{mode_one}: {read_mode} \n' \
        f'{mode_two}: {write_mode} \n' \
