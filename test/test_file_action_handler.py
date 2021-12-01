@@ -2,10 +2,10 @@ import unittest
 from unittest.mock import patch
 
 from core.file_action_handler import FileActionHandler
-from core.file_handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
-
+from core.file_handler import CSVFileHandler, TXTFileHandler, DOCFileHandler
 from constants.constants import read_mode, write_mode
-from test.constants.constatns import test_txt_extension, test_csv_extension, test_doc_extension
+from test.constants.constatns import test_txt_extension, test_csv_extension, test_doc_extension, path_of_csv_read_file, \
+    path_of_csv_write_to_file
 
 
 class TestFileActionHandler(unittest.TestCase):
@@ -42,14 +42,14 @@ class TestFileActionHandler(unittest.TestCase):
             type(DOCFileHandler(test_txt_extension))
         )
 
-    @patch('core.file_handler_abc.CSVFileHandler.read_file')
+    @patch(path_of_csv_read_file)
     def test_do_action_read(self, mock_read_file):
         self.fileActionHandler.get_file_handler_by_extension(test_csv_extension)
         self.fileActionHandler.do_action(read_mode)
 
         self.assertTrue(mock_read_file.called)
 
-    @patch('core.file_handler_abc.TXTFileHandler.write_to_file')
+    @patch('core.file_handler.TXTFileHandler.write_to_file')
     def test_do_action_write(self, mock_write_to_file):
         self.fileActionHandler.get_file_handler_by_extension(test_txt_extension)
         self.fileActionHandler.do_action(write_mode)

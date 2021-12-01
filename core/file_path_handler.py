@@ -1,15 +1,12 @@
 import os
 
 from core.custom_error import CustomError
-
-from constants.constants import input_file_path, print_wrong_path, print_wrong_extension, allowed_extensions
 from utils.utils import get_file_extension
+from constants.constants import input_file_path, print_wrong_path, print_wrong_extension, allowed_extensions
 
 
 class FilePathHandler:
-    def __init__(self, menu):
-        self.menu = menu
-
+    def __init__(self):
         self.valid_status = False
 
     def get_file_path(self):
@@ -23,14 +20,14 @@ class FilePathHandler:
             self.valid_status = True
 
         except CustomError as error:
-            print(error.text)
+            print(error)
             self.valid_status = False
 
     def check_file(self, file_path):
         self.validate_file_path(file_path)
 
         while not self.valid_status:
-            return self.handler_wrong_path()
+            return None
 
         return file_path
 
@@ -47,6 +44,3 @@ class FilePathHandler:
 
         if file_extension not in allowed_extensions:
             raise CustomError(print_wrong_extension)
-
-    def handler_wrong_path(self):
-        return self.menu.run_menu()

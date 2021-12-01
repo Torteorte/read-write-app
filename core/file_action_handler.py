@@ -1,7 +1,6 @@
-from core.file_handler_abc import CSVFileHandler, TXTFileHandler, DOCFileHandler
-
-from constants.constants import read_mode, write_mode, csv_extension, txt_extension, doc_extension, default_text
 from utils.utils import get_file_extension
+from core.file_handler import CSVFileHandler, TXTFileHandler, DOCFileHandler
+from constants.constants import read_mode, write_mode, csv_extension, txt_extension, doc_extension, default_text
 
 
 class FileActionHandler:

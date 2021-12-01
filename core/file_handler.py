@@ -6,19 +6,19 @@ from constants.constants import number_of_string_for_read, print_empty_file, pri
 
 
 class FileHandlerABC(ABC):
-    @abstractmethod
-    def read_file(self):
-        raise NotImplementedError('Определите read_file в %s.' % self.__class__.__name__)
-
-    @abstractmethod
-    def write_to_file(self, text):
-        raise NotImplementedError('Определите write_to_file в %s.' % self.__class__.__name__)
-
-
-class FileHandler:
     def __init__(self, file_path):
         self.file_path = file_path
 
+    @abstractmethod
+    def read_file(self):
+        pass
+
+    @abstractmethod
+    def write_to_file(self, text):
+        pass
+
+
+class ReadFileHandlerMixin:
     def read_file(self):
         file = open(self.file_path, 'r')
         line = file.read().split('\n')
@@ -34,10 +34,7 @@ class FileHandler:
         file.close()
 
 
-class CSVFileHandler(FileHandlerABC, FileHandler):
-    def read_file(self):
-        FileHandler.read_file(self)
-
+class CSVFileHandler(ReadFileHandlerMixin, FileHandlerABC):
     def write_to_file(self, default_csv_text):
         with open(self.file_path, 'w', newline='') as File:
             content_of_file = csv.writer(File)
@@ -57,17 +54,11 @@ class CSVFileHandler(FileHandlerABC, FileHandler):
         return text_without_first_row
 
 
-class TXTFileHandler(FileHandlerABC, FileHandler):
-    def read_file(self):
-        FileHandler.read_file(self)
-
+class TXTFileHandler(ReadFileHandlerMixin, FileHandlerABC):
     def write_to_file(self, default_text):
         return default_write_to_file(self.file_path, default_text)
 
 
-class DOCFileHandler(FileHandlerABC, FileHandler):
-    def read_file(self):
-        FileHandler.read_file(self)
-
+class DOCFileHandler(ReadFileHandlerMixin, FileHandlerABC):
     def write_to_file(self, default_text):
         return default_write_to_file(self.file_path, default_text)

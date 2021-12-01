@@ -2,7 +2,6 @@ from core.menu import Menu
 from core.mode_handler import ModeHandler
 from core.file_path_handler import FilePathHandler
 from core.file_action_handler import FileActionHandler
-
 from constants.constants import default_menu_text, print_good_bye
 
 
@@ -17,7 +16,7 @@ class App:
 
         self.menu = Menu(default_menu_text, menu_modes)
         self.mode_handler = ModeHandler()
-        self.file_path_handler = FilePathHandler(self.menu)
+        self.file_path_handler = FilePathHandler()
         self.file_action_handler = FileActionHandler()
 
         self.exit = False
@@ -40,7 +39,12 @@ class App:
         return self.mode_handler.get_mode()
 
     def get_file_path(self):
-        return self.file_path_handler.get_file_path()
+        file_path = self.file_path_handler.get_file_path()
+
+        if file_path is None:
+            self.handler_call_menu()
+
+        return file_path
 
     def change_mode(self):
         self.mode = self.get_mode()

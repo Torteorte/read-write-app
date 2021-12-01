@@ -2,10 +2,10 @@ import unittest
 from unittest.mock import patch
 
 from core.app import App
-
 from constants.constants import print_good_bye, read_mode
 from test.constants.constatns import path_of_show_menu, path_of_get_mode, path_of_start_action_with_file, \
-    path_of_get_file_path
+    path_of_get_file_path, test_txt, path_of_run_menu, path_of_do_action, path_of_handler_call_menu, \
+    path_of_get_file_handler_by_extension, builtins_print
 
 
 class TestApp(unittest.TestCase):
@@ -23,20 +23,23 @@ class TestApp(unittest.TestCase):
         self.assertTrue(mock_get_mode.called)
         self.assertTrue(mock_get_file_path.get_file_path)
 
-    @patch(path_of_get_mode)
-    @patch(path_of_get_file_path)
-    def test_init_properties(self, mock_get_file_path, mock_get_mode):
-        mock_get_file_path.return_value = 'some_test.txt'
-        mock_get_mode.return_value = read_mode
-
+    @patch(path_of_get_mode, return_value=read_mode)
+    @patch(path_of_get_file_path, return_value=test_txt)
+    def test_init_properties(self, *args):
         self.app.init_properties()
 
-        self.assertEqual(self.app.file_path, 'some_test.txt')
+        self.assertEqual(self.app.file_path, test_txt)
         self.assertEqual(self.app.mode, read_mode)
 
-    @patch('core.file_action_handler.FileActionHandler.get_file_handler_by_extension')
-    @patch('core.file_action_handler.FileActionHandler.do_action')
-    @patch('core.app.App.handler_call_menu')
+    @patch(path_of_get_file_path, return_value=None)
+    @patch(path_of_handler_call_menu)
+    def test_false_file_path(self, mock_handler_call_menu, *args):
+        self.app.get_file_path()
+        self.assertTrue(mock_handler_call_menu.called)
+
+    @patch(path_of_get_file_handler_by_extension)
+    @patch(path_of_do_action)
+    @patch(path_of_handler_call_menu)
     def test_start_action_with_file(self, mock_handler_call_menu, mock_do_action,  mock_get_file_handler_by_extension):
         self.app.start_action_with_file()
 
@@ -79,7 +82,7 @@ class TestApp(unittest.TestCase):
         self.assertTrue(mock_get_file_path.called)
         self.assertTrue(mock_start_action_with_file.called)
 
-    @patch('builtins.print')
+    @patch(builtins_print)
     def test_end_app(self, mock_print):
         self.app.end_app()
 
@@ -98,7 +101,7 @@ class TestApp(unittest.TestCase):
 
         self.assertFalse(mock_show_menu.called)
 
-    @patch('core.menu.Menu.run_menu')
+    @patch(path_of_run_menu)
     def test_show_menu(self, mock_run_menu):
         self.app.show_menu()
         self.assertTrue(mock_run_menu.called)

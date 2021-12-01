@@ -1,14 +1,14 @@
 import unittest
 from unittest.mock import patch
 
-from utils.utils import default_write_to_file, get_file_extension
 from constants.constants import print_success_write
-from test.constants.constatns import test_txt_file_name, test_text_to_write
+from utils.utils import default_write_to_file, get_file_extension
+from test.constants.constatns import test_txt_file_name, test_text_to_write, builtins_print
 
 
 class TestDefaultWriteToFile(unittest.TestCase):
 
-    @patch('builtins.print')
+    @patch(builtins_print)
     def test_default_write_to_file(self, mock_print):
         default_write_to_file(test_txt_file_name, test_text_to_write)
 
@@ -19,8 +19,8 @@ class TestDefaultWriteToFile(unittest.TestCase):
 
         file.close()
 
-    # def test_get_file_extension(self):
-    #     self.assertEqual(get_file_extension(test_txt_file_name), '.txt')
+    def test_get_file_extension(self):
+        self.assertEqual(get_file_extension(test_txt_file_name), '.txt')
 
 
 if __name__ == "__main__":
