@@ -1,8 +1,8 @@
 ### Быстрый доступ для записи/чтения
 ```
-text_files/empty.csv
-text_files/empty.txt
-text_files/example.csv
-text_files/example.txt
-text_files/example.doc
+test/text_files/empty.csv
+test/text_files/empty.txt
+test/text_files/example.csv
+test/text_files/example.txt
+test/text_files/example.doc
 ```

@@ -1,4 +1,4 @@
-from constants.constants import print_wrong_item
+from constants.constants import print_wrong_item, modes_lists, print_unknown_method
 
 
 class Menu:
@@ -8,7 +8,7 @@ class Menu:
 
     def run_menu(self):
         number = self.get_menu_number()
-        self.checkout_number(number)
+        return self.checkout_number(number)
 
     def get_menu_number(self):
         return input(self.menu_text)
@@ -20,3 +20,14 @@ class Menu:
         else:
             print(print_wrong_item)
             self.run_menu()
+
+
+class MenuGetMode(Menu):
+    def checkout_number(self, menu_number):
+        for key in self._menu_modes:
+
+            if menu_number in self._menu_modes[key]:
+                return key
+
+        print(print_unknown_method)
+        return self.run_menu()

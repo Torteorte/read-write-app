@@ -1,8 +1,7 @@
-from core.menu import Menu
-from core.mode_handler import ModeHandler
+from core.menu import Menu, MenuGetMode
 from core.file_path_handler import FilePathHandler
 from core.file_action_handler import FileActionHandler
-from constants.constants import default_menu_text, print_good_bye
+from constants.constants import default_menu_text, print_good_bye, input_get_mode, modes_lists
 
 
 class App:
@@ -15,7 +14,7 @@ class App:
         }
 
         self.menu = Menu(default_menu_text, menu_modes)
-        self.mode_handler = ModeHandler()
+        self.menu_get_mode = MenuGetMode(input_get_mode, modes_lists)
         self.file_path_handler = FilePathHandler()
         self.file_action_handler = FileActionHandler()
 
@@ -36,7 +35,7 @@ class App:
             self.handler_call_menu()
 
     def get_mode(self):
-        return self.mode_handler.get_mode()
+        return self.menu_get_mode.run_menu()
 
     def get_file_path(self):
         file_path = self.file_path_handler.get_file_path()

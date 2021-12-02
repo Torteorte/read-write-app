@@ -9,16 +9,6 @@ class FileHandlerABC(ABC):
     def __init__(self, file_path):
         self.file_path = file_path
 
-    @abstractmethod
-    def read_file(self):
-        pass
-
-    @abstractmethod
-    def write_to_file(self, text):
-        pass
-
-
-class ReadFileHandlerMixin:
     def read_file(self):
         file = open(self.file_path, 'r')
         line = file.read().split('\n')
@@ -33,8 +23,12 @@ class ReadFileHandlerMixin:
 
         file.close()
 
+    @abstractmethod
+    def write_to_file(self, text):
+        pass
 
-class CSVFileHandler(ReadFileHandlerMixin, FileHandlerABC):
+
+class CSVFileHandler(FileHandlerABC):
     def write_to_file(self, default_csv_text):
         with open(self.file_path, 'w', newline='') as File:
             content_of_file = csv.writer(File)
@@ -43,7 +37,6 @@ class CSVFileHandler(ReadFileHandlerMixin, FileHandlerABC):
             for row in self.delete_first_row_in_text(default_csv_text):
                 content_of_file.writerow([row])
 
-        File.close()
         print(print_success_write)
 
     @staticmethod
@@ -54,11 +47,11 @@ class CSVFileHandler(ReadFileHandlerMixin, FileHandlerABC):
         return text_without_first_row
 
 
-class TXTFileHandler(ReadFileHandlerMixin, FileHandlerABC):
+class TXTFileHandler(FileHandlerABC):
     def write_to_file(self, default_text):
         return default_write_to_file(self.file_path, default_text)
 
 
-class DOCFileHandler(ReadFileHandlerMixin, FileHandlerABC):
+class DOCFileHandler(FileHandlerABC):
     def write_to_file(self, default_text):
         return default_write_to_file(self.file_path, default_text)

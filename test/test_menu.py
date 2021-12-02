@@ -1,11 +1,11 @@
 import unittest
 from unittest.mock import patch
 
-from core.menu import Menu
-from constants.constants import print_wrong_item, menu_test_text
+from core.menu import Menu, MenuGetMode
+from constants.constants import print_wrong_item, menu_test_text, print_unknown_method
 from test.utils.utils import test_function_one, test_function_two
 from test.constants.constatns import test_number1, test_number2, test_menu_modes, builtins_input, builtins_print, \
-    path_of_checkout_number, path_of_run_menu
+    path_of_checkout_number, path_of_run_menu, test_modes_lists
 
 
 class TestMenu(unittest.TestCase):
@@ -49,6 +49,26 @@ class TestMenu(unittest.TestCase):
 
         self.assertTrue(mock_run_menu.called)
         mock_print.assert_called_with(print_wrong_item)
+
+
+class TestMenuGetMode(unittest.TestCase):
+    def setUp(self):
+        self.ModeHandler = MenuGetMode(menu_test_text, test_modes_lists)
+
+    def test_checkout_number(self):
+        self.assertEqual(self.ModeHandler.checkout_number('1'), 'test1')
+        self.assertEqual(self.ModeHandler.checkout_number('test_1'), 'test1')
+
+        self.assertEqual(self.ModeHandler.checkout_number('2'), 'test2')
+        self.assertEqual(self.ModeHandler.checkout_number('horosho'), 'test2')
+
+    @patch(path_of_run_menu)
+    @patch(builtins_print)
+    def test_false_checkout_number(self, mock_print, mock_run_menu):
+        self.ModeHandler.checkout_number('Левый текст')
+
+        mock_print.assert_called_with(print_unknown_method)
+        self.assertTrue(mock_run_menu.called)
 
 
 if __name__ == "__main__":

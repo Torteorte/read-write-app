@@ -13,7 +13,6 @@ class TestFileHandlerABC(unittest.TestCase):
     @patch("core.file_handler.FileHandlerABC.__abstractmethods__", set())
     def test_abstract_class(self):
         file_handler_abc = FileHandlerABC('')
-        self.assertIsNone(file_handler_abc.read_file())
         self.assertIsNone(file_handler_abc.write_to_file(''))
 
     @patch(builtins_print)

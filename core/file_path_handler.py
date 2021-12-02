@@ -26,7 +26,7 @@ class FilePathHandler:
     def check_file(self, file_path):
         self.validate_file_path(file_path)
 
-        while not self.valid_status:
+        if not self.valid_status:
             return None
 
         return file_path
